@@ -7,12 +7,12 @@ on:
 
 jobs:
   build:
-      runs-on: ubuntu-latest
-      steps:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v6
 
       - name: Install pnpm
-        uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # v6.0.5
+        uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d
         with:
           version: 11
 
@@ -32,8 +32,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v4
         with:
-          path: build_outputs_folder
-
+          path: dist
 
   deploy:
     permissions:
@@ -48,6 +47,4 @@ jobs:
     steps:
       - name: Deploy to Github Pages
         id: deployment
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
+        uses: actions/deploy-pages@v4
