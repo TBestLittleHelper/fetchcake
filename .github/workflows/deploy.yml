@@ -6,14 +6,9 @@ on:
       - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-24.04
-
-    strategy:
-      matrix:
-        node-version: [24]
-
-    steps:
+  build:
+      runs-on: ubuntu-latest
+      steps:
       - uses: actions/checkout@v6
 
       - name: Install pnpm
@@ -21,17 +16,38 @@ jobs:
         with:
           version: 11
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 24
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm build
 
-      - name: Deploy
-        run: pnpm deploy
+      - name: Upload static files as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: build_outputs_folder
+
+
+  deploy:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
