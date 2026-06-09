@@ -44,7 +44,6 @@ main {
 #imageGallery {
   display: flex;
   justify-content: center;
-  margin: 1rem;
   width: 100%;
   max-height: 70%;
 }
