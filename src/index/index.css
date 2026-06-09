@@ -1,9 +1,12 @@
 ﻿:root {
+  --background-color: #2f4f4f;
+  --title-color: #ffde59;
   --text-color: #f5f5f5;
+  --button-text-color: var(--background-color)
 }
 
 a {
-  color: #ffde59;
+  color: var(--title-color);
   text-decoration: none;
 }
 
@@ -16,7 +19,7 @@ body {
   max-height: 100dvh;
   margin: 0;
   padding: 0;
-  background-color: darkslategray;
+  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -25,7 +28,7 @@ body {
 }
 
 header {
-  color: var(--text-color);
+  color: var(--title-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,6 +60,7 @@ main {
 
 #newCupcakeButton {
   font-size: larger;
+  color: var(--button-text-color);
 }
 
 footer {
