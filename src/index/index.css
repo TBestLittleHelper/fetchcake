@@ -50,7 +50,7 @@ main {
 
 #imageGallery img {
   max-height: 60dvh;
-  max-width: 80dvh;
+  max-width: inherit;
   height: auto;
   width: auto;
   object-fit: contain;
