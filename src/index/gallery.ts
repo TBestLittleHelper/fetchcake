@@ -7,12 +7,14 @@ const galleryImages = Object.entries(imageModules)
 	.sort(([leftPath], [rightPath]) => leftPath.localeCompare(rightPath, undefined, { numeric: true }))
 	.map(([, imagePath]) => imagePath)
 
-export function createGallery(startIndex = 0) {
+export function createGallery(index?: number) {
 	if (galleryImages.length === 0) {
 		throw new Error('No images were found in src/assets.')
 	}
 
-	let currentIndex = ((startIndex % galleryImages.length) + galleryImages.length) % galleryImages.length
+	const resolvedStartIndex = index ?? Math.floor(Math.random() * galleryImages.length)
+
+	let currentIndex = ((resolvedStartIndex % galleryImages.length) + galleryImages.length) % galleryImages.length
 
 	return {
 		images: galleryImages,
