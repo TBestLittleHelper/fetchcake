@@ -64,7 +64,8 @@ main {
   align-items: center;
 }
 
-#newCupcakeButton {
+#newCupcakeButton,
+#copyLinkButton {
   font-size: larger;
   color: var(--button-text-color);
   border-radius: 8px;
