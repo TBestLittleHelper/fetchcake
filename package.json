@@ -13,6 +13,7 @@
     "vite": "^8.0.12"
   },
   "dependencies": {
-    "@lichess-org/chessground": "^10.1.1"
+    "@lichess-org/chessground": "^10.1.1",
+    "chessops": "^0.15.0"
   }
 }

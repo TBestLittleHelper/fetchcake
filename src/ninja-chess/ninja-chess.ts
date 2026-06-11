@@ -3,6 +3,19 @@ import './ninja-chess.css'
 import { Chessground } from '@lichess-org/chessground';
 import type { Config } from "@lichess-org/chessground/config";
 
+import { Chess } from 'chessops/chess';
+import { parseFen, makeFen } from 'chessops/fen';
+import { parseUci } from 'chessops/util';
+
+import { getPuzzleBatch } from './puzzle';
+
+let puzzleBatch = getPuzzleBatch()
+let currentPuzzle = puzzleBatch?.puzzles[0]
+if (!currentPuzzle) {
+  alert('No puzzles found!')
+  throw new Error('No puzzle available.')
+}
+
 const boardElement = document.querySelector<HTMLElement>('#board')
 
 if (!boardElement) {
@@ -20,9 +33,21 @@ const config: Config = {
 }
 
 const ground = Chessground(boardElement, config)
-const dailyFen = "4rq2/pp6/6k1/8/7Q/3p4/PPP3PP/4R2K w - - 6 31"
 
-ground.set({ fen: dailyFen })
+let moves = currentPuzzle.Moves.split(" ");
+let moveUci = moves[0]
+let move = parseUci(moveUci)
+if (!move) {
+  throw new Error(`Could not parse move: ${moveUci}`)
+}
+
+let setup = parseFen(currentPuzzle.FEN).unwrap()
+let chess = Chess.fromSetup(setup).unwrap()
+chess.play(move)
+console.log("Last move:", moveUci)
+
+let fen = makeFen(chess.toSetup())
+ground.set({ fen: fen })
 
 // Initialize Ninja Chess page
 const container = document.querySelector<HTMLElement>('#ninjaChessContainer')
