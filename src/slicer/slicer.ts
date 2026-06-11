@@ -31,4 +31,16 @@ if (!container) {
   throw new Error('Slicer markup is missing from slicer.html.')
 }
 
-// Slicer page functionality can be added here
+// Log square to console when mouse is over the board
+let lastSquare: string | null = null
+boardElement.addEventListener('mousemove', (event: MouseEvent) => {
+  const square = ground.getKeyAtDomPos([event.clientX, event.clientY])
+  if (!square) {
+    return;
+  }
+  if (square === lastSquare) {
+    return;
+  }
+  lastSquare = square;
+  console.log(square)
+})
