@@ -1,4 +1,4 @@
-import './slicer.css'
+import './ninja-chess.css'
 
 import { Chessground } from '@lichess-org/chessground';
 import type { Config } from "@lichess-org/chessground/config";
@@ -6,7 +6,7 @@ import type { Config } from "@lichess-org/chessground/config";
 const boardElement = document.querySelector<HTMLElement>('#board')
 
 if (!boardElement) {
-  throw new Error('Board element is missing from slicer.html.')
+  throw new Error('Board element is missing from ninja-chess.html.')
 }
 
 const config: Config = {
@@ -24,11 +24,11 @@ const dailyFen = "4rq2/pp6/6k1/8/7Q/3p4/PPP3PP/4R2K w - - 6 31"
 
 ground.set({ fen: dailyFen })
 
-// Initialize slicer page
-const container = document.querySelector<HTMLElement>('#slicerContainer')
+// Initialize Ninja Chess page
+const container = document.querySelector<HTMLElement>('#ninjaChessContainer')
 
 if (!container) {
-  throw new Error('Slicer markup is missing from slicer.html.')
+  throw new Error('Ninja Chess markup is missing from ninja-chess.html.')
 }
 
 // Log square to console when position changes
