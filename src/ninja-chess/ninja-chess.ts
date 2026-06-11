@@ -34,8 +34,21 @@ const config: Config = {
 
 const ground = Chessground(boardElement, config)
 
+const maxSquares = 16;
+
 let moves = currentPuzzle.Moves.split(" ");
 let moveUci = moves[0]
+let solution = moves.slice(1)
+
+let attempt: string[] = []
+
+const addAttempt = (square: string) => {
+  attempt.push(square);
+  while (attempt.length > maxSquares) {
+    attempt.shift();
+  }
+};
+
 let move = parseUci(moveUci)
 if (!move) {
   throw new Error(`Could not parse move: ${moveUci}`)
@@ -64,6 +77,10 @@ const logSquareAtPos = (x: number, y: number) => {
     return
   }
   lastSquare = square
+  addAttempt(square)
+  if (isSolved()) {
+    console.log("Puzzle solved!")
+  }
   console.log(square)
 }
 
@@ -77,3 +94,18 @@ boardElement.addEventListener('touchmove', (event: TouchEvent) => {
   const touch = event.touches[0]
   logSquareAtPos(touch.clientX, touch.clientY)
 })
+
+function isSolved() {
+  if (!solution || solution.length === 0) return false;
+
+  // Get first move and convert to squares
+  const firstMove = solution[0];
+  const fromSquare = firstMove.substring(0, 2);
+  const toSquare = firstMove.substring(2, 4);
+
+  // Check if attempt matches the two squares from the first move
+  if (attempt.includes(fromSquare) &&
+    attempt.includes(toSquare)
+  )
+    return true;
+}
