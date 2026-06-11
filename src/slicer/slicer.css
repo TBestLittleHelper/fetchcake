@@ -2,7 +2,8 @@
   --background-color: #2f4f4f;
   --title-color: wheat;
   --text-color: #f5f5f5;
-  --button-text-color: var(--background-color)
+  --button-text-color: var(--background-color);
+  --boardsize: min(80dvh, 80dvw);
 }
 
 * {
@@ -48,9 +49,23 @@ main {
 
 #slicerContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+  flex: 1 1 auto;
+  flex-direction: row;
+  height: var(--boardsize);
+}
+
+#board {
+  display: flex;
+  aspect-ratio: 1;
+}
+
+#board>* {
+  max-width: 100%;
+}
+
+cg-container {
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 footer {
