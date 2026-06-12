@@ -7,7 +7,9 @@ import { Chess } from 'chessops/chess';
 import { parseFen, makeFen } from 'chessops/fen';
 import { parseUci } from 'chessops/util';
 
-import { getPuzzleBatch } from './puzzle';
+import { getPuzzleBatch, startPuzzleGame } from './puzzle';
+
+
 
 let puzzleBatch = getPuzzleBatch()
 let currentPuzzle = puzzleBatch?.puzzles[0]
@@ -17,10 +19,15 @@ if (!currentPuzzle) {
 }
 
 const boardElement = document.querySelector<HTMLElement>('#board')
+const statusElement = document.querySelector<HTMLElement>("#ninjaGameStatus")
 
-if (!boardElement) {
-  throw new Error('Board element is missing from ninja-chess.html.')
+if (!boardElement || !statusElement) {
+  throw new Error('Board or status element is missing from ninja-chess.html.')
 }
+
+let status = startPuzzleGame()
+statusElement.textContent = status
+
 
 const config: Config = {
   coordinates: true,

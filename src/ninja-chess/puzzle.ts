@@ -6,7 +6,12 @@ WHERE NbPlays > 200000
   AND Popularity > 90
 ORDER BY NbPlays DESC
 LIMIT 10;
+
 */
+
+
+
+type status = "won" | "inProgress";
 
 const exampleBatch = {
 	"puzzles": [
@@ -27,4 +32,9 @@ const exampleBatch = {
 
 export function getPuzzleBatch() {
 	return exampleBatch;
+}
+
+export function startPuzzleGame() {
+	let status: status = "inProgress"
+	return status
 }
