@@ -12,7 +12,7 @@ import { getPuzzleBatch, startPuzzleGame } from './puzzle';
 
 
 let puzzleBatch = getPuzzleBatch()
-let currentPuzzle = puzzleBatch?.puzzles[0]
+let currentPuzzle = puzzleBatch[0]
 if (!currentPuzzle) {
   alert('No puzzles found!')
   throw new Error('No puzzle available.')
@@ -43,7 +43,7 @@ const ground = Chessground(boardElement, config)
 
 const maxSquares = 16;
 
-let moves = currentPuzzle.Moves.split(" ");
+let moves = currentPuzzle.moves.split(" ");
 let moveUci = moves[0]
 let solution = moves.slice(1)
 
@@ -61,7 +61,7 @@ if (!move) {
   throw new Error(`Could not parse move: ${moveUci}`)
 }
 
-let setup = parseFen(currentPuzzle.FEN).unwrap()
+let setup = parseFen(currentPuzzle.fen).unwrap()
 let chess = Chess.fromSetup(setup).unwrap()
 chess.play(move)
 console.log("Last move:", moveUci)
@@ -111,8 +111,10 @@ function isSolved() {
   const toSquare = firstMove.substring(2, 4);
 
   // Check if attempt matches the two squares from the first move
-  if (attempt.includes(fromSquare) &&
-    attempt.includes(toSquare)
-  )
+  if (attempt.includes(fromSquare) && attempt.includes(toSquare)) {
+    statusElement!.textContent = "Puzzle solved!";
     return true;
+  }
+
+  return false;
 }
