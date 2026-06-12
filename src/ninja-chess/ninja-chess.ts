@@ -16,12 +16,8 @@ const startIndex = Math.floor(Math.random() * (nbPuzzles - 30));
 
 console.log("Start index:", startIndex);
 
-let puzzleBatch = getPuzzleBatch(startIndex)
-let currentPuzzle = puzzleBatch[0]
-if (!currentPuzzle) {
-  alert('No puzzles found!')
-  throw new Error('No puzzle available.')
-}
+const puzzleBatch = getPuzzleBatch(startIndex)
+
 
 const boardElement = document.querySelector<HTMLElement>('#board')
 const statusElement = document.querySelector<HTMLElement>("#ninjaGameStatus")
@@ -30,9 +26,7 @@ if (!boardElement || !statusElement) {
   throw new Error('Board or status element is missing from ninja-chess.html.')
 }
 
-let status = startPuzzleGame()
 statusElement.textContent = status
-
 
 const config: Config = {
   coordinates: true,
@@ -45,8 +39,13 @@ const config: Config = {
 }
 
 const ground = Chessground(boardElement, config)
-
 const maxSquares = 16;
+
+// Game state
+let status = startPuzzleGame()
+
+let solvedPuzzles = 0
+let currentPuzzle = nextPuzzle(puzzleBatch, solvedPuzzles)
 
 let moves = currentPuzzle.moves.split(" ");
 let moveUci = moves[0]
@@ -123,4 +122,12 @@ function isSolved() {
   }
 
   return false;
+}
+
+function nextPuzzle(puzzleBatch, currentIndex) {
+  currentIndex++;
+  if (currentIndex >= puzzleBatch.length) {
+    currentIndex = 0;
+  }
+  return puzzleBatch[currentIndex];
 }
