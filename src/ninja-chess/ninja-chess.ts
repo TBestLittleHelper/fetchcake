@@ -26,8 +26,6 @@ if (!boardElement || !statusElement) {
   throw new Error('Board or status element is missing from ninja-chess.html.')
 }
 
-statusElement.textContent = status
-
 const config: Config = {
   coordinates: true,
   viewOnly: true,
@@ -64,6 +62,8 @@ let move = parseUci(moveUci)
 if (!move) {
   throw new Error(`Could not parse move: ${moveUci}`)
 }
+
+statusElement.textContent = status
 
 let setup = parseFen(currentPuzzle.fen).unwrap()
 let chess = Chess.fromSetup(setup).unwrap()
@@ -124,7 +124,7 @@ function isSolved() {
   return false;
 }
 
-function nextPuzzle(puzzleBatch, currentIndex) {
+function nextPuzzle(puzzleBatch: string | any[], currentIndex: number) {
   currentIndex++;
   if (currentIndex >= puzzleBatch.length) {
     currentIndex = 0;
