@@ -2,6 +2,10 @@
 
 The site uses pnpm and vite. Use pnpm vite to start a development server
 
+### Puzzles for Ninja Chess
+Puzzles are located in src/assets and named sample_puzzle.json
+
+The format is the same as the Lichess export. You can download the Lichess puzzles ( 1gb+) and run sample-puzzle.js to generate the desired sample. From root, you can run the script with node lichess_db_puzzle/sample-puzzles.js
 
 ### Deploy
 
