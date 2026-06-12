@@ -7,11 +7,15 @@ import { Chess } from 'chessops/chess';
 import { parseFen, makeFen } from 'chessops/fen';
 import { parseUci } from 'chessops/util';
 
-import { getPuzzleBatch, startPuzzleGame } from './puzzle';
+import { getnbPuzzles, getPuzzleBatch, startPuzzleGame } from './puzzle';
 
 
+const nbPuzzles = getnbPuzzles();
+const startIndex = Math.floor(Math.random() * (nbPuzzles - 30));
 
-let puzzleBatch = getPuzzleBatch()
+console.log("Start index:", startIndex);
+
+let puzzleBatch = getPuzzleBatch(startIndex)
 let currentPuzzle = puzzleBatch[0]
 if (!currentPuzzle) {
   alert('No puzzles found!')
