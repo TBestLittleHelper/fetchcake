@@ -8,6 +8,7 @@ import { parseFen, makeFen } from 'chessops/fen';
 import { parseUci } from 'chessops/util';
 
 import { getnbPuzzles, getPuzzleBatch, startPuzzleGame } from './puzzle';
+import type { Key } from '@lichess-org/chessground/types';
 
 
 const nbPuzzles = getnbPuzzles();
@@ -70,8 +71,9 @@ let chess = Chess.fromSetup(setup).unwrap()
 chess.play(move)
 console.log("Last move:", moveUci)
 
-let fen = makeFen(chess.toSetup())
-ground.set({ fen: fen })
+let fen = makeFen(chess.toSetup());
+
+ground.set({ fen: fen, lastMove: [moveUci.substring(0, 2), moveUci.substring(2, 4)] as Key[] })
 
 // Initialize Ninja Chess page
 const container = document.querySelector<HTMLElement>('#ninjaChessContainer')
