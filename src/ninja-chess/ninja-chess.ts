@@ -72,7 +72,7 @@ console.log("Last move:", moveUci)
 
 let fen = makeFen(chess.toSetup());
 
-ground.set({ fen: fen, lastMove: [moveUci.substring(0, 2), moveUci.substring(2, 4)] as Key[] })
+ground.set({ fen: fen, orientation: chess.turn, lastMove: [moveUci.substring(0, 2), moveUci.substring(2, 4)] as Key[] })
 
 // Initialize Ninja Chess page
 const container = document.querySelector<HTMLElement>('#ninjaChessContainer')
