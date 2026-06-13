@@ -1,15 +1,16 @@
 import samplePuzzleData from '../assets/sample_puzzle.json';
 
+const nbPuzzles = 30;
+
 export function getPuzzleBatch(startIndex: number) {
-	let puzzles = samplePuzzleData.puzzles.slice(startIndex, startIndex + 30);
+	let puzzles = samplePuzzleData.puzzles.slice(startIndex, startIndex + nbPuzzles);
 	// Shuffle them, in case someone gets the same index more then once
 	puzzles = shuffle(puzzles)
 	return puzzles;
 }
 
 export function getnbPuzzles() {
-	console.log(samplePuzzleData.puzzles)
-	return samplePuzzleData.puzzles.length;
+	return nbPuzzles;
 }
 
 // https://bost.ocks.org/mike/shuffle/
