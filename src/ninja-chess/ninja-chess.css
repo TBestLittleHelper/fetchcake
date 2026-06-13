@@ -55,6 +55,13 @@ main {
   justify-content: center;
 }
 
+#ninjaGameProgress {
+  display: flex;
+  flex: 1 1 auto;
+  width: var(--boardsize);
+  margin: auto;
+}
+
 #board {
   display: flex;
   aspect-ratio: 1;
