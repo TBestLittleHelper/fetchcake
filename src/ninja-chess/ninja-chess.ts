@@ -141,6 +141,18 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
   gamestate.moveUci = gamestate.moves[0]
   gamestate.solution = gamestate.moves.slice(1)
   gamestate.attemptSquares = []
+
+  let setup = parseFen(gamestate.currentPuzzle.fen).unwrap()
+  let move = parseUci(gamestate.moveUci)
+  if (!move) {
+    throw new Error(`Could not parse move: ${gamestate.moveUci}`)
+  }
+  chess = Chess.fromSetup(setup).unwrap()
+  chess.play(move)
+  console.log("Last move:", gamestate.moveUci)
+
+  let fen = makeFen(chess.toSetup());
+  ground.set({ fen: fen, orientation: chess.turn, lastMove: [gamestate.moveUci.substring(0, 2), gamestate.moveUci.substring(2, 4)] as Key[] })
 }
 
 function endGame(): void {
