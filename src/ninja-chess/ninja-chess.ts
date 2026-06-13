@@ -105,7 +105,7 @@ const logSquareAtPos = (x: number, y: number) => {
   if (isSolved()) {
     gamestate.solvedPuzzles++;
     console.log("Puzzle solved! nb solved puzzles:", gamestate.solvedPuzzles)
-    if (gamestate.solvedPuzzles > nbPuzzles) {
+    if (gamestate.solvedPuzzles >= nbPuzzles) {
       endGame();
       return;
     }
