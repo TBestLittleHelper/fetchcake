@@ -10,6 +10,7 @@ import { parseUci } from 'chessops/util';
 import { getnbPuzzles, getPuzzleBatch } from './puzzle';
 import type { Key } from '@lichess-org/chessground/types';
 import type { Puzzle, GameState } from './types';
+import type { DrawShape } from '@lichess-org/chessground/draw';
 
 const nbPuzzles = getnbPuzzles();
 const startIndex = Math.floor(Math.random() * (nbPuzzles - 30));
@@ -25,13 +26,13 @@ if (!boardElement || !progressElement) {
 }
 
 progressElement.max = nbPuzzles;
+
 const config: Config = {
   coordinates: true,
   viewOnly: true,
   disableContextMenu: true,
   highlight: {
     lastMove: true,
-    check: true
   }
 }
 
@@ -54,9 +55,18 @@ const gamestate: GameState = {
 
 const addAttempt = (square: Key): void => {
   gamestate.attemptSquares.push(square);
+
+  // Remove oldest attempts
   while (gamestate.attemptSquares.length > maxSquaresAttempt) {
     gamestate.attemptSquares.shift();
   }
+
+  const updatedShapes: DrawShape[] = gamestate.attemptSquares.map(sq => ({
+    orig: sq,
+    brush: 'blue',
+  }));
+
+  ground.setShapes(updatedShapes);
 };
 
 let move = parseUci(gamestate.moveUci)
