@@ -1,9 +1,15 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/fetchcake/',
+  base: '/',
   build: {
     outDir: 'dist',
     sourcemap: false,
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        ninja: 'ninja.html',
+      },
+    }
   },
 })
