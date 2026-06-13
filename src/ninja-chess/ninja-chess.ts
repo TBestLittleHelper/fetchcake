@@ -121,8 +121,8 @@ function isSolved(): boolean {
 
   // Get first move and convert to squares
   const firstMove = solution[0];
-  const fromSquare = firstMove.substring(0, 2);
-  const toSquare = firstMove.substring(2, 4);
+  const fromSquare = firstMove.substring(0, 2) as Key;
+  const toSquare = firstMove.substring(2, 4) as Key;
 
   // Check if attempt matches the two squares from the first move
   if (attemptSquares.includes(fromSquare) && attemptSquares.includes(toSquare)) {
