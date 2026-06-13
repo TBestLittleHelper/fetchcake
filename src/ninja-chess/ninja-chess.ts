@@ -9,6 +9,7 @@ import { parseUci } from 'chessops/util';
 
 import { getnbPuzzles, getPuzzleBatch } from './puzzle';
 import type { Key } from '@lichess-org/chessground/types';
+import type { Puzzle, GameState } from './types';
 
 
 const nbPuzzles = getnbPuzzles();
@@ -41,18 +42,18 @@ const config: Config = {
 const ground = Chessground(boardElement, config)
 
 // Game state
-let solvedPuzzles = 0
-let currentPuzzle = nextPuzzle(puzzleBatch, solvedPuzzles)
+let solvedPuzzles: number = 0
+let currentPuzzle: Puzzle = nextPuzzle(puzzleBatch, solvedPuzzles)
 
-let moves = currentPuzzle.moves.split(" ");
-let moveUci = moves[0]
-let solution = moves.slice(1)
+let moves: string[] = [];
+let moveUci: string = ''
+let solution: string[] = []
 
-let attemptSquares: string[] = []
+let attemptSquares: Key[] = []
 
 nextPuzzle(puzzleBatch, solvedPuzzles)
 
-const addAttempt = (square: string) => {
+const addAttempt = (square: Key): void => {
   attemptSquares.push(square);
   while (attemptSquares.length > maxSquaresAttempt) {
     attemptSquares.shift();
@@ -84,7 +85,7 @@ if (!container) {
 }
 
 // Log square to console when position changes
-let lastSquare: string | null = null
+let lastSquare: Key | null = null
 const logSquareAtPos = (x: number, y: number) => {
   const square = ground.getKeyAtDomPos([x, y])
   if (!square || square === lastSquare) {
@@ -115,7 +116,7 @@ boardElement.addEventListener('touchmove', (event: TouchEvent) => {
   logSquareAtPos(touch.clientX, touch.clientY)
 })
 
-function isSolved() {
+function isSolved(): boolean {
   if (!solution || solution.length === 0) return false;
 
   // Get first move and convert to squares
@@ -132,7 +133,7 @@ function isSolved() {
   return false;
 }
 
-function nextPuzzle(puzzleBatch: any[], currentIndex: number): void {
+function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): Puzzle {
   currentIndex++;
   if (currentIndex >= puzzleBatch.length) {
     currentIndex = 0;
@@ -145,6 +146,6 @@ function nextPuzzle(puzzleBatch: any[], currentIndex: number): void {
   return currentPuzzle;
 }
 
-function endGame() {
+function endGame(): void {
   statusElement!.textContent = "Game completed!";
 };
