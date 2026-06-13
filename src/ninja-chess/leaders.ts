@@ -29,6 +29,3 @@ const leaderboardDialog = document.querySelector<HTMLDialogElement>('#leaderboar
 if (!leaderboardButton || !leaderboardDialog) {
 	throw new Error(`Could not find leaderboard elements`)
 }
-leaderboardButton.addEventListener('click', () => {
-	leaderboardDialog.showModal()
-})
