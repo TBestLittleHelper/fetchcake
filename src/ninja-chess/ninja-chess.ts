@@ -63,7 +63,7 @@ const addAttempt = (square: Key): void => {
 
   const updatedShapes: DrawShape[] = gamestate.attemptSquares.map(sq => ({
     orig: sq,
-    brush: 'blue',
+    brush: 'paleBlue',
   }));
 
   ground.setShapes(updatedShapes);
@@ -93,7 +93,6 @@ if (!container) {
   throw new Error('Ninja Chess markup is missing from ninja-chess.html.')
 }
 
-// Log square to console when position changes
 let lastSquare: Key | null = null
 const logSquareAtPos = (x: number, y: number) => {
   const square = ground.getKeyAtDomPos([x, y])
