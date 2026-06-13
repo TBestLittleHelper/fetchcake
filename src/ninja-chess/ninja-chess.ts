@@ -7,12 +7,14 @@ import { Chess } from 'chessops/chess';
 import { parseFen, makeFen } from 'chessops/fen';
 import { parseUci } from 'chessops/util';
 
-import { getnbPuzzles, getPuzzleBatch, startPuzzleGame } from './puzzle';
+import { getnbPuzzles, getPuzzleBatch } from './puzzle';
 import type { Key } from '@lichess-org/chessground/types';
 
 
 const nbPuzzles = getnbPuzzles();
 const startIndex = Math.floor(Math.random() * (nbPuzzles - 30));
+const maxSquaresAttempt = 16;
+
 
 console.log("Start index:", startIndex);
 
@@ -37,11 +39,8 @@ const config: Config = {
 }
 
 const ground = Chessground(boardElement, config)
-const maxSquares = 16;
 
 // Game state
-let status = startPuzzleGame()
-
 let solvedPuzzles = 0
 let currentPuzzle = nextPuzzle(puzzleBatch, solvedPuzzles)
 
@@ -49,12 +48,14 @@ let moves = currentPuzzle.moves.split(" ");
 let moveUci = moves[0]
 let solution = moves.slice(1)
 
-let attempt: string[] = []
+let attemptSquares: string[] = []
+
+nextPuzzle(puzzleBatch, solvedPuzzles)
 
 const addAttempt = (square: string) => {
-  attempt.push(square);
-  while (attempt.length > maxSquares) {
-    attempt.shift();
+  attemptSquares.push(square);
+  while (attemptSquares.length > maxSquaresAttempt) {
+    attemptSquares.shift();
   }
 };
 
@@ -67,6 +68,7 @@ statusElement.textContent = status
 
 let setup = parseFen(currentPuzzle.fen).unwrap()
 let chess = Chess.fromSetup(setup).unwrap()
+
 chess.play(move)
 console.log("Last move:", moveUci)
 
@@ -91,7 +93,13 @@ const logSquareAtPos = (x: number, y: number) => {
   lastSquare = square
   addAttempt(square)
   if (isSolved()) {
-    console.log("Puzzle solved!")
+    solvedPuzzles++;
+    console.log("Puzzle solved! nb solved puzzles:", solvedPuzzles)
+    if (solvedPuzzles > nbPuzzles) {
+      endGame();
+      return;
+    }
+    nextPuzzle(puzzleBatch, solvedPuzzles)
   }
   console.log(square)
 }
@@ -116,7 +124,7 @@ function isSolved() {
   const toSquare = firstMove.substring(2, 4);
 
   // Check if attempt matches the two squares from the first move
-  if (attempt.includes(fromSquare) && attempt.includes(toSquare)) {
+  if (attemptSquares.includes(fromSquare) && attemptSquares.includes(toSquare)) {
     statusElement!.textContent = "Puzzle solved!";
     return true;
   }
@@ -124,10 +132,19 @@ function isSolved() {
   return false;
 }
 
-function nextPuzzle(puzzleBatch: string | any[], currentIndex: number) {
+function nextPuzzle(puzzleBatch: any[], currentIndex: number): void {
   currentIndex++;
   if (currentIndex >= puzzleBatch.length) {
     currentIndex = 0;
   }
-  return puzzleBatch[currentIndex];
+  currentPuzzle = puzzleBatch[currentIndex];
+  moves = currentPuzzle.moves.split(" ");
+  moveUci = moves[0]
+  solution = moves.slice(1)
+  attemptSquares = []
+  return currentPuzzle;
 }
+
+function endGame() {
+  statusElement!.textContent = "Game completed!";
+};
