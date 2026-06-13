@@ -6,10 +6,6 @@
   --boardsize: min(80dvh, 80dvw);
 }
 
-* {
-  outline: 1px solid red;
-}
-
 a {
   color: var(--title-color);
   text-decoration: none;
