@@ -18,12 +18,13 @@ const maxSquaresAttempt = 16;
 console.log("Start index:", startIndex);
 
 const boardElement = document.querySelector<HTMLElement>('#board')
-const statusElement = document.querySelector<HTMLElement>("#ninjaGameStatus")
+const progressElement = document.querySelector<HTMLProgressElement>("#ninjaGameProgress")
 
-if (!boardElement || !statusElement) {
+if (!boardElement || !progressElement) {
   throw new Error('Board or status element is missing from ninja-chess.html.')
 }
 
+progressElement.max = nbPuzzles;
 const config: Config = {
   coordinates: true,
   viewOnly: true,
@@ -124,7 +125,7 @@ function isSolved(): boolean {
 
   // Check if attempt matches the two squares from the first move
   if (gamestate.attemptSquares.includes(fromSquare) && gamestate.attemptSquares.includes(toSquare)) {
-    statusElement!.textContent = "Puzzle solved!";
+    progressElement!.value = gamestate.solvedPuzzles;
     return true;
   }
 
@@ -149,12 +150,12 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
   }
   chess = Chess.fromSetup(setup).unwrap()
   chess.play(move)
-  console.log("Last move:", gamestate.moveUci)
+  console.log("Play " + gamestate.solution[0].toString())
 
   let fen = makeFen(chess.toSetup());
   ground.set({ fen: fen, orientation: chess.turn, lastMove: [gamestate.moveUci.substring(0, 2), gamestate.moveUci.substring(2, 4)] as Key[] })
 }
 
 function endGame(): void {
-  statusElement!.textContent = "Game completed!";
+  alert("Game completed!");
 };
