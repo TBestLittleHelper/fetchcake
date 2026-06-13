@@ -11,6 +11,7 @@ import { getnbPuzzles, getPuzzleBatch } from './puzzle';
 import type { Key } from '@lichess-org/chessground/types';
 import type { Puzzle, GameState } from './types';
 import type { DrawShape } from '@lichess-org/chessground/draw';
+import { addLocalScore } from './leaders';
 
 const nbPuzzles = getnbPuzzles();
 const startIndex = Math.floor(Math.random() * (nbPuzzles - 30));
@@ -166,5 +167,6 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
 }
 
 function endGame(): void {
+  addLocalScore("Player", gamestate.solvedPuzzles, 100) // todo time
   alert("Game completed!");
 };
