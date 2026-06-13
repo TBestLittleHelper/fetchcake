@@ -31,10 +31,18 @@ body {
 
 header {
   color: var(--title-color);
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   margin-top: 1rem;
+}
+
+header>button {
+  background-color: #00000000;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 8px;
 }
 
 main {
@@ -55,7 +63,9 @@ main {
   display: flex;
   flex: 1 1 auto;
   width: var(--boardsize);
+  height: 2.2rem;
   margin: auto;
+  accent-color: chartreuse;
 }
 
 #board {
