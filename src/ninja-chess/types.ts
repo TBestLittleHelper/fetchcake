@@ -1,7 +1,9 @@
 import type { Key } from '@lichess-org/chessground/types';
 
+type PuzzleID = string;
+
 export interface Puzzle {
-	puzzleId: string;
+	puzzleId: PuzzleID;
 	fen: string;
 	moves: string;
 	rating: number;
@@ -21,4 +23,16 @@ export interface GameState {
 	solution: string[];
 	attemptSquares: Key[];
 	status: string;
+}
+
+export interface CompletedRunStatistics {
+	Puzzles: PuzzleStatistic[];
+	startTime: Date
+	finishTime: Date
+}
+
+interface PuzzleStatistic {
+	puzzleID: PuzzleID;
+	endTime: Date
+	squares: number
 }
