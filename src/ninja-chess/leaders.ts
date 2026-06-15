@@ -4,7 +4,7 @@ type Leader = {
 	time: number;
 }
 
-export const leaders: Leader[] = [{
+const leaders: Leader[] = [{
 	name: "Alice",
 	squares: 120,
 	time: 1000
