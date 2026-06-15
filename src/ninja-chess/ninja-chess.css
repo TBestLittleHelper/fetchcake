@@ -60,6 +60,12 @@ dialog:not([open]) {
 
 #leaderboardDialog>table {
   display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+#leaderboardDialog>table>thead {
+  align-self: center;
 }
 
 header {
