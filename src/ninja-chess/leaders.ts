@@ -17,7 +17,7 @@ const leaders: Leader[] = [{
 ];
 
 
-let localScores = []
+let localScores: Leader[] = []
 
 export const addLocalLeaderboardScore = (squares: number, time: number) => {
 	localScores.push({ name: "Your Score", squares, time })
@@ -40,7 +40,9 @@ function updateLeaderboard() {
 
 	leaderboardBody.innerHTML = ''
 
-	for (const leader of leaders) {
+	let allLeaders = [...leaders, ...localScores]
+
+	for (const leader of allLeaders) {
 		const tr = document.createElement("tr");
 
 		const nameTd = document.createElement("td");
