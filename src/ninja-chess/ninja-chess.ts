@@ -104,6 +104,7 @@ const logSquareAtPos = (x: number, y: number) => {
   addAttempt(square)
   if (isSolved()) {
     gamestate.solvedPuzzles++;
+    progressElement!.value = gamestate.solvedPuzzles;
     console.log("Puzzle solved! nb solved puzzles:", gamestate.solvedPuzzles)
     if (gamestate.solvedPuzzles >= nbPuzzles) {
       endGame();
@@ -135,7 +136,6 @@ function isSolved(): boolean {
 
   // Check if attempt matches the two squares from the first move
   if (gamestate.attemptSquares.includes(fromSquare) && gamestate.attemptSquares.includes(toSquare)) {
-    progressElement!.value = gamestate.solvedPuzzles;
     return true;
   }
 
