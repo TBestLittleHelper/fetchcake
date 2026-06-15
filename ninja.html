@@ -18,7 +18,14 @@
     <h1>Ninja Chess</h1>
     <button id="settingsButton" command="show-modal" commandfor="settingsDialog">⚙️</button>
   </header>
-  <dialog id="leaderboardDialog"><table>
+  <dialog id="leaderboardDialog">
+     <form method="dialog">
+      <div class="dialogHeader">
+        <h3>Ninja Chess Leaderboard</h3>
+        <button class="dialog-close">✕</button></div>
+
+  </form>
+    <table>
     <thead>
       <tr>
         <th>Player</th>
@@ -30,7 +37,16 @@
     </tbody>
     </table>
   </dialog>
-  <dialog id="settingsDialog"></dialog>
+  <dialog id="settingsDialog">
+     <form method="dialog">
+    <h2>Settings</h2>
+
+    <label class="setting">
+      <span>Mouse Trail</span>
+      <input type="checkbox" id="trailToggle" checked>
+    </label>
+    </form>
+  </dialog>
   <main>
     <progress id="ninjaGameProgress" value="0"></progress>
     <div id="ninjaChessContainer">
