@@ -167,6 +167,6 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
 }
 
 function endGame(): void {
-  addLocalLeaderboardScore("Player", gamestate.solvedPuzzles, 100) // todo time
+  addLocalLeaderboardScore(gamestate.solvedPuzzles, 100) // todo time
   alert("Game completed!");
 };

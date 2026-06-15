@@ -19,8 +19,8 @@ const leaders: Leader[] = [{
 
 let localScores = []
 
-export const addLocalLeaderboardScore = (name: string, squares: number, time: number) => {
-	localScores.push({ name, squares, time })
+export const addLocalLeaderboardScore = (squares: number, time: number) => {
+	localScores.push({ name: "Your Score", squares, time })
 }
 
 
