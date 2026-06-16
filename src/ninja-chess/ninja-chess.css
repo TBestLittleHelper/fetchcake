@@ -48,14 +48,20 @@ dialog:not([open]) {
 .dialogHeader {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+}
+
+.dialogHeader h3 {
+  flex: 1;
+  text-align: center;
+  margin: 0;
 }
 
 .dialog-close {
   height: 2rem;
   background-color: transparent;
   border-radius: 5px;
+  margin-left: auto;
 }
 
 #leaderboardDialog table {
