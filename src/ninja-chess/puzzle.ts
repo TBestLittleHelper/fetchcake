@@ -2,7 +2,7 @@ import samplePuzzleData from '../assets/sample_puzzle.json';
 
 const nbPuzzles = 30;
 
-export function getPuzzleBatch(startIndex: number) {
+export function getPuzzleBatch() {
 	const selected = new Set<number>();
 	const puzzleDatabaseLength = samplePuzzleData.puzzles.length
 

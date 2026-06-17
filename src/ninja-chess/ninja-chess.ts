@@ -14,10 +14,7 @@ import type { DrawShape } from '@lichess-org/chessground/draw';
 import { addLocalLeaderboardScore } from './leaders';
 
 const nbPuzzles = getnbPuzzles();
-const startIndex = Math.floor(Math.random() * (nbPuzzles - 30));
 const maxSquaresAttempt = 9;
-
-console.log("Start index:", startIndex);
 
 const boardElement = document.querySelector<HTMLElement>('#board')
 const progressElement = document.querySelector<HTMLProgressElement>("#ninjaGameProgress")
@@ -40,7 +37,7 @@ const config: Config = {
 const ground = Chessground(boardElement, config)
 
 // Initialize game state
-const puzzleBatch = getPuzzleBatch(startIndex)
+const puzzleBatch = getPuzzleBatch()
 const initialPuzzle = puzzleBatch[0]
 const initialMoves = initialPuzzle.moves.split(" ")
 
