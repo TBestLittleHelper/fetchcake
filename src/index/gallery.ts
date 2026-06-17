@@ -7,6 +7,8 @@ const galleryImages = Object.entries(imageModules)
 	.sort(([leftPath], [rightPath]) => leftPath.localeCompare(rightPath, undefined, { numeric: true }))
 	.map(([, imagePath]) => imagePath)
 
+const prefetchImage = new Image()
+
 export function createGallery(index?: number) {
 	if (galleryImages.length === 0) {
 		throw new Error('No images were found in src/assets.')
@@ -25,5 +27,11 @@ export function createGallery(index?: number) {
 			currentIndex = (currentIndex + 1) % galleryImages.length
 			return galleryImages[currentIndex]
 		},
+		prefetchNextImage() {
+			const nextIndex = (currentIndex + 1) % galleryImages.length
+			prefetchImage.src = galleryImages[nextIndex]
+
+			return galleryImages[nextIndex]
+		}
 	}
 }
