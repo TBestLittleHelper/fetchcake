@@ -3,6 +3,9 @@
 import fs from 'fs';
 import readline from 'readline';
 import path from 'path';
+import { Chess } from "chessops";
+import { parseFen } from 'chessops/fen';
+
 
 const inputFile = path.join('lichess_db_puzzle', 'lichess_db_puzzle.csv');
 const outputFile = path.join('src', 'assets', 'sample_puzzle.json');
@@ -44,7 +47,15 @@ async function samplePuzzles() {
 			const openingTags = parts[9] || '';
 
 			// Apply filters
-			if (nbPlays > 200000 && popularity > 80 && rating > 1700) {
+			if (nbPlays > 10000 && popularity > 80 && rating > 1700) {
+				const setup = parseFen(fen).unwrap()
+				const chess = Chess.fromSetup(setup).unwrap();
+				// We only want all puzzles to have the same side to play.
+				// As all puzzle's first move is for the last move of the opponent, the actual puzzle is opposite of what we filter for
+				if (chess.turn === 'white') {
+					continue;
+				}
+
 				puzzles.push({
 					puzzleId,
 					fen,
