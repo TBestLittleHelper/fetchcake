@@ -11,7 +11,6 @@ if (!imageElement || !nextCupcakeButton || !copyButton) {
 
 const gallery = createGallery()
 
-imageElement.src = gallery.getCurrentImage()
 gallery.prefetchNextImage()
 
 nextCupcakeButton.addEventListener('click', () => {
