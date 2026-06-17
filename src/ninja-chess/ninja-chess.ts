@@ -163,7 +163,13 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
   console.log("Play " + gamestate.solution[0].toString())
 
   let fen = makeFen(chess.toSetup());
-  ground.set({ fen: fen, orientation: chess.turn, lastMove: [gamestate.moveUci.substring(0, 2), gamestate.moveUci.substring(2, 4)] as Key[] })
+  ground.setShapes([]);
+  ground.set({
+    fen: fen,
+    orientation: chess.turn,
+    lastMove: [gamestate.moveUci.substring(0, 2),
+    gamestate.moveUci.substring(2, 4)] as Key[]
+  })
 }
 
 function endGame(): void {
