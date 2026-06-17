@@ -1,6 +1,6 @@
 import type { Key } from '@lichess-org/chessground/types';
 
-type PuzzleID = string;
+export type PuzzleID = string;
 
 export interface Puzzle {
 	puzzleId: PuzzleID;
@@ -31,7 +31,7 @@ export interface CompletedRunStatistics {
 	finishTime: Date
 }
 
-interface PuzzleStatistic {
+export interface PuzzleStatistic {
 	puzzleID: PuzzleID;
 	endTime: Date
 	squares: number
