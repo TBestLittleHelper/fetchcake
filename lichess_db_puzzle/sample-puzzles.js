@@ -78,7 +78,7 @@ async function samplePuzzles() {
 	console.log(`Found ${puzzles.length} puzzles matching criteria`);
 
 	// Sort by popularity descending and take top
-	const numberOfPuzzles = 1000;
+	const numberOfPuzzles = 30000;
 	const topPuzzles = puzzles
 		.sort((a, b) => b.popularity - a.popularity)
 		.slice(0, numberOfPuzzles);
