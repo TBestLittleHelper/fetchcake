@@ -18,6 +18,11 @@ const leaders: Leader[] = [{
 	name: "Charlie",
 	squares: 1004,
 	timeInMilliseconds: 101982
+},
+{
+	name: "ArthurDent",
+	squares: 795,
+	timeInMilliseconds: 99606
 }
 ];
 
