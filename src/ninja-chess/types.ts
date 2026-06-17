@@ -18,6 +18,7 @@ export interface Puzzle {
 export interface GameState {
 	solvedPuzzles: number;
 	currentPuzzle: Puzzle;
+	currentPuzzleTotalSquares: number;
 	moves: string[];
 	moveUci: string;
 	solution: string[];

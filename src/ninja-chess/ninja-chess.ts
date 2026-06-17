@@ -12,6 +12,7 @@ import type { Key } from '@lichess-org/chessground/types';
 import type { Puzzle, GameState } from './types';
 import type { DrawShape } from '@lichess-org/chessground/draw';
 import { addLocalLeaderboardScore } from './leaders';
+import { addPuzzleStatistic, endStatisticsRun } from './run-statistics';
 
 const nbPuzzles = getnbPuzzles();
 const maxSquaresAttempt = 9;
@@ -44,6 +45,7 @@ const initialMoves = initialPuzzle.moves.split(" ")
 const gamestate: GameState = {
   solvedPuzzles: 0,
   currentPuzzle: initialPuzzle,
+  currentPuzzleTotalSquares: 0,
   moves: initialMoves,
   moveUci: initialMoves[0],
   solution: initialMoves.slice(1),
@@ -52,6 +54,7 @@ const gamestate: GameState = {
 }
 
 const addAttempt = (square: Key): void => {
+  gamestate.currentPuzzleTotalSquares++;
   gamestate.attemptSquares.push(square);
 
   // Remove oldest attempts
@@ -109,7 +112,6 @@ const logSquareAtPos = (x: number, y: number) => {
     }
     nextPuzzle(puzzleBatch, gamestate.solvedPuzzles)
   }
-  console.log(square)
 }
 
 // Log square on mouse move
@@ -140,11 +142,14 @@ function isSolved(): boolean {
 }
 
 function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
+  addPuzzleStatistic(gamestate.currentPuzzle.puzzleId, gamestate.currentPuzzleTotalSquares)
+
   currentIndex++;
   if (currentIndex >= puzzleBatch.length) {
     currentIndex = 0;
   }
   gamestate.currentPuzzle = puzzleBatch[currentIndex];
+  gamestate.currentPuzzleTotalSquares = 0;
   gamestate.moves = gamestate.currentPuzzle.moves.split(" ");
   gamestate.moveUci = gamestate.moves[0]
   gamestate.solution = gamestate.moves.slice(1)
@@ -170,6 +175,11 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
 }
 
 function endGame(): void {
-  addLocalLeaderboardScore(gamestate.solvedPuzzles, 100) // todo time
-  alert("Game completed!");
+  const statistics = endStatisticsRun()
+
+  const totalSquares = gamestate.currentPuzzleTotalSquares
+  const time = statistics.finishTime.getTime() - statistics.startTime.getTime()
+
+  addLocalLeaderboardScore(totalSquares, time) // todo time
+  alert("Game completed! " + time.toString() + "  " + totalSquares);
 };
