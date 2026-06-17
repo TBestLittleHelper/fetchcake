@@ -1,18 +1,23 @@
 type Leader = {
 	name: string,
 	squares: number,
-	time: number;
+	timeInMilliseconds: number;
 }
 
 const leaders: Leader[] = [{
 	name: "Alice",
 	squares: 120,
-	time: 1000
+	timeInMilliseconds: 130000
 },
 {
 	name: "Bob",
 	squares: 110,
-	time: 1200
+	timeInMilliseconds: 120000
+},
+{
+	name: "Charlie",
+	squares: 100,
+	timeInMilliseconds: 101982
 }
 ];
 
@@ -20,7 +25,7 @@ const leaders: Leader[] = [{
 let localScores: Leader[] = []
 
 export const addLocalLeaderboardScore = (squares: number, time: number) => {
-	localScores.push({ name: "Your Score", squares, time })
+	localScores.push({ name: "Your Score", squares, timeInMilliseconds: time })
 }
 
 
@@ -52,7 +57,8 @@ function updateLeaderboard() {
 		squaresTd.textContent = leader.squares.toString();
 
 		const timeTd = document.createElement("td");
-		timeTd.textContent = leader.time.toString();
+		const timeInSeconds = leader.timeInMilliseconds / 1000;
+		timeTd.textContent = timeInSeconds.toFixed(2);
 
 		tr.append(nameTd, squaresTd, timeTd);
 		leaderboardBody.appendChild(tr);

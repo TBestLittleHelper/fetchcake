@@ -179,6 +179,6 @@ function endGame(): void {
   const totalSquares = gamestate.currentPuzzleTotalSquares
   const time = statistics.finishTime.getTime() - statistics.startTime.getTime()
 
-  addLocalLeaderboardScore(totalSquares, time) // todo time
+  addLocalLeaderboardScore(totalSquares, time)
   alert("Game completed! " + time.toString() + "  " + totalSquares);
 };
