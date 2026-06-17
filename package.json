@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "puzzle": "node lichess_db_puzzle/sample-puzzles.js"
   },
   "devDependencies": {
     "typescript": "~6.0.3",

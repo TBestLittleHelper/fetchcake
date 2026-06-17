@@ -44,7 +44,7 @@ async function samplePuzzles() {
 			const openingTags = parts[9] || '';
 
 			// Apply filters
-			if (nbPlays > 200000 && popularity > 80) {
+			if (nbPlays > 200000 && popularity > 80 && rating > 1700) {
 				puzzles.push({
 					puzzleId,
 					fen,
