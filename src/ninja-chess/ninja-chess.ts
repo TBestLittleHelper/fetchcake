@@ -81,7 +81,6 @@ let setup = parseFen(gamestate.currentPuzzle.fen).unwrap()
 let chess = Chess.fromSetup(setup).unwrap()
 
 chess.play(move)
-console.log("Last move:", gamestate.moveUci)
 
 let fen = makeFen(chess.toSetup());
 
