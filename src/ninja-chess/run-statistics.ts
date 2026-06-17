@@ -34,3 +34,7 @@ export function endStatisticsRun(): CompletedRunStatistics {
 	};
 	return completedRun;
 }
+
+export function totalSquares(run: CompletedRunStatistics): number {
+	return run.Puzzles.reduce((total, puzzle) => total + puzzle.squares, 0);
+}

@@ -6,17 +6,17 @@ type Leader = {
 
 const leaders: Leader[] = [{
 	name: "Alice",
-	squares: 120,
+	squares: 1600,
 	timeInMilliseconds: 130000
 },
 {
 	name: "Bob",
-	squares: 110,
+	squares: 1100,
 	timeInMilliseconds: 120000
 },
 {
 	name: "Charlie",
-	squares: 100,
+	squares: 1004,
 	timeInMilliseconds: 101982
 }
 ];
@@ -46,6 +46,7 @@ function updateLeaderboard() {
 	leaderboardBody.innerHTML = ''
 
 	let allLeaders = [...leaders, ...localScores]
+	allLeaders.sort((a, b) => a.timeInMilliseconds - b.timeInMilliseconds)
 
 	for (const leader of allLeaders) {
 		const tr = document.createElement("tr");

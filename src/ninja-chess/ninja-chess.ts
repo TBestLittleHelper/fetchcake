@@ -12,7 +12,7 @@ import type { Key } from '@lichess-org/chessground/types';
 import type { Puzzle, GameState } from './types';
 import type { DrawShape } from '@lichess-org/chessground/draw';
 import { addLocalLeaderboardScore } from './leaders';
-import { addPuzzleStatistic, endStatisticsRun } from './run-statistics';
+import { addPuzzleStatistic, endStatisticsRun, totalSquares } from './run-statistics';
 
 const nbPuzzles = getnbPuzzles();
 const maxSquaresAttempt = 9;
@@ -174,11 +174,11 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
 }
 
 function endGame(): void {
-  const statistics = endStatisticsRun()
+  const completedRunStats = endStatisticsRun()
 
-  const totalSquares = gamestate.currentPuzzleTotalSquares
-  const time = statistics.finishTime.getTime() - statistics.startTime.getTime()
+  const runTotalSquares = totalSquares(completedRunStats);
+  const time = completedRunStats.finishTime.getTime() - completedRunStats.startTime.getTime()
 
-  addLocalLeaderboardScore(totalSquares, time)
-  alert("Game completed! " + time.toString() + "  " + totalSquares);
+  addLocalLeaderboardScore(runTotalSquares, time)
+  alert("Game completed! " + time.toString() + "  " + runTotalSquares);
 };
