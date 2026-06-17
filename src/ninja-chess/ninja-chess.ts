@@ -15,7 +15,7 @@ import { addLocalLeaderboardScore } from './leaders';
 
 const nbPuzzles = getnbPuzzles();
 const startIndex = Math.floor(Math.random() * (nbPuzzles - 30));
-const maxSquaresAttempt = 16;
+const maxSquaresAttempt = 9;
 
 console.log("Start index:", startIndex);
 
