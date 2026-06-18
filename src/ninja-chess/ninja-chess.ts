@@ -26,17 +26,6 @@ if (!boardElement || !progressElement) {
 
 progressElement.max = nbPuzzles;
 
-const config: Config = {
-  coordinates: true,
-  viewOnly: true,
-  disableContextMenu: true,
-  highlight: {
-    lastMove: true,
-  }
-}
-
-const ground = Chessground(boardElement, config)
-
 // Initialize game state
 const puzzleBatch = getPuzzleBatch()
 const initialPuzzle = puzzleBatch[0]
@@ -84,7 +73,20 @@ chess.play(move)
 
 let fen = makeFen(chess.toSetup());
 
-ground.set({ fen: fen, orientation: chess.turn, lastMove: [gamestate.moveUci.substring(0, 2), gamestate.moveUci.substring(2, 4)] as Key[] })
+const config: Config = {
+  coordinates: true,
+  viewOnly: true,
+  disableContextMenu: true,
+  highlight: {
+    lastMove: true,
+  },
+  fen: fen,
+  orientation: chess.turn,
+  lastMove: [gamestate.moveUci.substring(0, 2), gamestate.moveUci.substring(2, 4)] as Key[]
+
+}
+const ground = Chessground(boardElement, config)
+ground.set(config)
 
 // Initialize Ninja Chess page
 const container = document.querySelector<HTMLElement>('#ninjaChessContainer')
