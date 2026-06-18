@@ -1,11 +1,10 @@
-const imageModules = import.meta.glob('../assets/*.{png,jpg,jpeg,webp,gif,svg}', {
-	eager: true,
-	import: 'default',
-}) as Record<string, string>
-
-const galleryImages = Object.entries(imageModules)
-	.sort(([leftPath], [rightPath]) => leftPath.localeCompare(rightPath, undefined, { numeric: true }))
-	.map(([, imagePath]) => imagePath)
+const galleryImages = [
+	"/cupcake/01.webp",
+	"/cupcake/01vert.png",
+	"/cupcake/03.jpg",
+	"/cupcake/04.jpg"
+]
+// todo maybe script this in a prebuild script or vite plugin
 
 const prefetchImage = new Image()
 
