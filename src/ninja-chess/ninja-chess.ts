@@ -14,6 +14,8 @@ import type { DrawShape } from '@lichess-org/chessground/draw';
 import { addLocalLeaderboardScore } from './leaders';
 import { addPuzzleStatistic, endStatisticsRun, totalSquares } from './run-statistics';
 
+const chessClockSound = new Audio("./sound/chessClock.m4a");
+
 const nbPuzzles = getnbPuzzles();
 const maxSquaresAttempt = 9;
 
@@ -104,6 +106,7 @@ const logSquareAtPos = (x: number, y: number) => {
   lastSquare = square
   addAttempt(square)
   if (isSolved()) {
+    chessClockSound.play().catch(console.error)
     gamestate.solvedPuzzles++;
     progressElement!.value = gamestate.solvedPuzzles;
     console.log("Puzzle solved! nb solved puzzles:", gamestate.solvedPuzzles)
