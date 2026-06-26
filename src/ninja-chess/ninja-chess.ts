@@ -108,7 +108,7 @@ const logSquareAtPos = (x: number, y: number) => {
   if (isSolved()) {
     chessClockSound.play().catch(console.error)
     gamestate.solvedPuzzles++;
-    progressElement!.value = gamestate.solvedPuzzles;
+    progressElement.value = gamestate.solvedPuzzles;
     console.log("Puzzle solved! nb solved puzzles:", gamestate.solvedPuzzles)
     if (gamestate.solvedPuzzles >= nbPuzzles) {
       endGame();
