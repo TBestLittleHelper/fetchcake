@@ -44,6 +44,20 @@ const gamestate: GameState = {
   status: ''
 }
 
+
+function loadPuzzle() {
+  const setup = parseFen(gamestate.currentPuzzle.fen).unwrap()
+  const move = parseUci(gamestate.moveUci)
+  if (!move) {
+    throw new Error(`Could not parse move: ${gamestate.moveUci}`)
+  }
+  const chess = Chess.fromSetup(setup).unwrap()
+  chess.play(move)
+  const fen = makeFen(chess.toSetup())
+  return { chess, fen }
+}
+
+
 const addAttempt = (square: Key): void => {
   gamestate.currentPuzzleTotalSquares++;
   gamestate.attemptSquares.push(square);
@@ -61,19 +75,9 @@ const addAttempt = (square: Key): void => {
   ground.setShapes(updatedShapes);
 };
 
-let move = parseUci(gamestate.moveUci)
-if (!move) {
-  throw new Error(`Could not parse move: ${gamestate.moveUci}`)
-}
+const puzzle = loadPuzzle()
 
 gamestate.status = "Playing"
-
-let setup = parseFen(gamestate.currentPuzzle.fen).unwrap()
-let chess = Chess.fromSetup(setup).unwrap()
-
-chess.play(move)
-
-let fen = makeFen(chess.toSetup());
 
 const config: Config = {
   coordinates: true,
@@ -82,8 +86,8 @@ const config: Config = {
   highlight: {
     lastMove: true,
   },
-  fen: fen,
-  orientation: chess.turn,
+  fen: puzzle.fen,
+  orientation: puzzle.chess.turn,
   lastMove: [gamestate.moveUci.substring(0, 2), gamestate.moveUci.substring(2, 4)] as Key[]
 
 }
@@ -155,20 +159,14 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
   gamestate.solution = gamestate.moves.slice(1)
   gamestate.attemptSquares = []
 
-  let setup = parseFen(gamestate.currentPuzzle.fen).unwrap()
-  let move = parseUci(gamestate.moveUci)
-  if (!move) {
-    throw new Error(`Could not parse move: ${gamestate.moveUci}`)
-  }
-  chess = Chess.fromSetup(setup).unwrap()
-  chess.play(move)
+  const puzzle = loadPuzzle()
+
   console.log("Play " + gamestate.solution[0].toString())
 
-  let fen = makeFen(chess.toSetup());
   ground.setShapes([]);
   ground.set({
-    fen: fen,
-    orientation: chess.turn,
+    fen: puzzle.fen,
+    orientation: puzzle.chess.turn,
     lastMove: [gamestate.moveUci.substring(0, 2),
     gamestate.moveUci.substring(2, 4)] as Key[]
   })
