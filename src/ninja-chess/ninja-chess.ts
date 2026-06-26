@@ -119,7 +119,7 @@ const logSquareAtPos = (x: number, y: number) => {
 }
 
 // Log square on pointermove ( mouse, touch or pen )
-boardElement.addEventListener('pointermove', (event: MouseEvent) => {
+boardElement.addEventListener('pointermove', (event: PointerEvent) => {
   logSquareAtPos(event.clientX, event.clientY)
 })
 
