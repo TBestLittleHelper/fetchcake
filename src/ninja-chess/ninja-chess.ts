@@ -128,7 +128,7 @@ boardElement.addEventListener('pointermove', (event: PointerEvent) => {
 })
 
 function isSolved(): boolean {
-  if (!gamestate.solution || gamestate.solution.length === 0) return false;
+  if (gamestate.solution.length === 0) return false;
 
   // Get first move and convert to squares
   const firstMove = gamestate.solution[0];
