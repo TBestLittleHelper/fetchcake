@@ -1,37 +1,42 @@
 import type { CompletedRunStatistics, PuzzleStatistic } from "./types";
 
-let inProgressRun: {
-	Puzzles: PuzzleStatistic[];
+type InProgressRun = {
+	puzzles: PuzzleStatistic[];
 	startTime: Date;
-};
+}
+let inProgressRun: InProgressRun | null = null;
 
 export function addPuzzleStatistic(puzzleID: string, squares: number) {
 	if (!inProgressRun) {
-		startStatisticsRun() //FIXME
+		throw new Error("No in-progress statistics run");
 	}
 
 	const currentPuzzleStatistic = {
-		puzzleID: puzzleID,
+		puzzleID,
 		endTime: new Date(),
-		squares: squares
+		squares
 	};
-	inProgressRun.Puzzles.push(currentPuzzleStatistic);
+	inProgressRun.puzzles.push(currentPuzzleStatistic);
 }
 
 export function startStatisticsRun() {
 	const startTime = new Date()
 	inProgressRun = {
-		Puzzles: [],
+		puzzles: [],
 		startTime: startTime,
 	};
 }
 
 export function endStatisticsRun(): CompletedRunStatistics {
+	if (!inProgressRun) {
+		throw new Error("No in-progress statistics run");
+	}
 	const completedRun: CompletedRunStatistics = {
-		Puzzles: inProgressRun.Puzzles,
+		Puzzles: inProgressRun.puzzles,
 		startTime: inProgressRun.startTime,
 		finishTime: new Date(),
 	};
+	inProgressRun = null;
 	return completedRun;
 }
 
