@@ -14,6 +14,8 @@ See the GitHub pages section here : https://vite.dev/guide/static-deploy
 ### Credits
 Favicon by Delapouite under CC BY 3.0 ( https://game-icons.net/1x1/delapouite/labrador-head.html )
 
+Tropical Fish by  Delapouite under CC BY 3.0 ( https://game-icons.net/1x1/delapouite/tropical-fish.html )
+
 Puzzles used is a sample from https://database.lichess.org/#puzzles
 
 Chessboard is chessground and chess rules chessops
