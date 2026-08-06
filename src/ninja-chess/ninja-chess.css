@@ -152,6 +152,13 @@ cg-container {
   width: min(4.5rem, calc(var(--boardsize) / 6.5));
   height: auto;
   display: block;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+#cupContainer img:hover,
+#cupContainer img.cup-icon:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 0.45rem rgba(255, 255, 255, 0.35));
 }
 
 footer {
