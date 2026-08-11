@@ -7,7 +7,7 @@ import { Chess } from 'chessops/chess';
 import { parseFen, makeFen } from 'chessops/fen';
 import { parseUci } from 'chessops/util';
 
-import { getnbPuzzles, getPuzzleBatch } from './puzzle';
+import { getnbPuzzles, getPuzzleBatch, type CupName } from './puzzle';
 import type { Key } from '@lichess-org/chessground/types';
 import type { Puzzle, GameState } from './types';
 import type { DrawShape } from '@lichess-org/chessground/draw';
@@ -29,8 +29,10 @@ if (!boardElement || !progressElement) {
 progressElement.max = nbPuzzles;
 
 // Initialize game state
-const puzzleBatch = getPuzzleBatch()
-const initialPuzzle = puzzleBatch[0]
+let selectedCup: CupName = 'fish';
+let puzzleBatch: Puzzle[] = [];
+puzzleBatch = await getPuzzleBatch(selectedCup);
+const initialPuzzle = puzzleBatch[0];
 const initialMoves = initialPuzzle.moves.split(" ")
 
 const gamestate: GameState = {
@@ -99,6 +101,47 @@ const container = document.querySelector<HTMLElement>('#ninjaChessContainer')
 
 if (!container) {
   throw new Error('Ninja Chess markup is missing from ninja-chess.html.')
+}
+
+const cupButtons = Array.from(document.querySelectorAll<HTMLImageElement>('#cupContainer img.cup-icon'));
+
+async function loadCup(cup: CupName) {
+  selectedCup = cup;
+  puzzleBatch = await getPuzzleBatch(selectedCup);
+  cupButtons.forEach((button) => {
+    button.classList.toggle('selected', button.dataset.cup === cup);
+  });
+
+  gamestate.solvedPuzzles = 0;
+  gamestate.currentPuzzle = puzzleBatch[0];
+  gamestate.currentPuzzleTotalSquares = 0;
+  gamestate.moves = gamestate.currentPuzzle.moves.split(' ');
+  gamestate.moveUci = gamestate.moves[0];
+  gamestate.solution = gamestate.moves.slice(1);
+  gamestate.attemptSquares = [];
+  gamestate.status = 'Playing';
+  if (progressElement) {
+    progressElement.value = 0;
+  }
+
+  const puzzle = loadPuzzle();
+  ground.setShapes([]);
+  ground.set({
+    fen: puzzle.fen,
+    orientation: puzzle.chess.turn,
+    lastMove: [gamestate.moveUci.substring(0, 2), gamestate.moveUci.substring(2, 4)] as Key[],
+  });
+}
+
+for (const cupButton of cupButtons) {
+  const cup = cupButton.dataset.cup as CupName | undefined;
+  if (!cup) {
+    continue;
+  }
+
+  cupButton.addEventListener('click', () => {
+    void loadCup(cup);
+  });
 }
 
 let lastSquare: Key | null = null
