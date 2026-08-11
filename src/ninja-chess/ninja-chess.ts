@@ -11,8 +11,6 @@ import { getnbPuzzles, getPuzzleBatch, type CupName } from './puzzle';
 import type { Key } from '@lichess-org/chessground/types';
 import type { Puzzle, GameState } from './types';
 import type { DrawShape } from '@lichess-org/chessground/draw';
-import { addLocalLeaderboardScore } from './leaders';
-import { addPuzzleStatistic, endStatisticsRun, totalSquares } from './run-statistics';
 
 const chessClockSound = new Audio("./sound/chessClock.m4a");
 
@@ -214,11 +212,5 @@ function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
 }
 
 function endGame(): void {
-  const completedRunStats = endStatisticsRun()
-
-  const runTotalSquares = totalSquares(completedRunStats);
-  const time = completedRunStats.finishTime.getTime() - completedRunStats.startTime.getTime()
-
-  addLocalLeaderboardScore(runTotalSquares, time)
-  alert("Game completed! " + time.toString() + "  " + runTotalSquares);
+  alert("Cup completed! ");
 };
