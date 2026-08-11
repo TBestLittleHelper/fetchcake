@@ -10,6 +10,15 @@ import { parseFen } from 'chessops/fen';
 const inputFile = path.join('lichess_db_puzzle', 'lichess_db_puzzle.csv');
 const outputFile = path.join('src', 'assets', 'sample_puzzle.json');
 
+const cupFilters = {
+	fish =[rating = 1200, nbPlays = 10000, popularity = 80],
+	camel =[rating = 1400, nbPlays = 10000, popularity = 80],
+	frog=[rating = 1600, nbPlays = 10000, popularity = 80],
+	mite =[rating = 1800, nbPlays = 10000, popularity = 80],
+	rhino =[rating = 2000, nbPlays = 10000, popularity = 80]
+
+}
+
 async function samplePuzzles() {
 	const puzzles = [];
 	let headerLine = null;
