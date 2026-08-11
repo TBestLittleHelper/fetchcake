@@ -1,20 +1,43 @@
-import samplePuzzleData from '../assets/sample_puzzle.json';
+import type { Puzzle } from './types';
 
-const nbPuzzles = 30;
+const CupPuzzleLength = 30;
 
-export function getPuzzleBatch() {
+export type CupName = 'fish' | 'camel' | 'frog' | 'mite' | 'rhino';
+
+const puzzleCache: Partial<Record<CupName, Puzzle[]>> = {};
+
+async function loadPuzzleData(cup: CupName): Promise<Puzzle[]> {
+	switch (cup) {
+		case 'camel':
+			return (await import('../assets/camel.json')).default.puzzles as Puzzle[];
+		case 'frog':
+			return (await import('../assets/frog.json')).default.puzzles as Puzzle[];
+		case 'mite':
+			return (await import('../assets/mite.json')).default.puzzles as Puzzle[];
+		case 'rhino':
+			return (await import('../assets/rhino.json')).default.puzzles as Puzzle[];
+		case 'fish':
+		default:
+			return (await import('../assets/fish.json')).default.puzzles as Puzzle[];
+	}
+}
+
+export async function getPuzzleBatch(cup: CupName = 'fish') {
+	if (!puzzleCache[cup]) {
+		puzzleCache[cup] = await loadPuzzleData(cup);
+	}
+
+	const puzzleDatabase = puzzleCache[cup]!;
 	const selected = new Set<number>();
-	const puzzleDatabaseLength = samplePuzzleData.puzzles.length
+	const puzzleDatabaseLength = puzzleDatabase.length;
 
-	while (selected.size < nbPuzzles) {
+	while (selected.size < CupPuzzleLength) {
 		selected.add(Math.floor(Math.random() * puzzleDatabaseLength));
 	}
 	const indices = [...selected];
-	const puzzles = indices.map(index => samplePuzzleData.puzzles[index]);
-
-	return puzzles;
+	return indices.map((index) => puzzleDatabase[index]);
 }
 
 export function getnbPuzzles() {
-	return nbPuzzles;
+	return CupPuzzleLength;
 }

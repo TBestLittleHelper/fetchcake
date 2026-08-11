@@ -1,3 +1,4 @@
 node_modules
 dist
 lichess_db_puzzle.csv
+.vscode
