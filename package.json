@@ -11,10 +11,10 @@
   },
   "devDependencies": {
     "typescript": "~6.0.3",
-    "vite": "^8.0.16"
+    "vite": "^8.2.1"
   },
   "dependencies": {
     "@lichess-org/chessground": "^10.1.1",
-    "chessops": "^0.15.0"
+    "chessops": "^0.15.1"
   }
 }
