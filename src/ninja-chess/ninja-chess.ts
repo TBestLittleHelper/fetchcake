@@ -187,8 +187,6 @@ function isSolved(): boolean {
 }
 
 function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
-  addPuzzleStatistic(gamestate.currentPuzzle.puzzleId, gamestate.currentPuzzleTotalSquares)
-
   lastSquare = null;
 
   currentIndex++;
