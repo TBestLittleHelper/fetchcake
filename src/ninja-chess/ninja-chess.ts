@@ -101,7 +101,7 @@ if (!container) {
   throw new Error('Ninja Chess markup is missing from ninja-chess.html.')
 }
 
-const cupButtons = Array.from(document.querySelectorAll<HTMLImageElement>('#cupContainer img.cup-icon'));
+const cupButtons = Array.from(document.querySelectorAll<SVGSVGElement>('#cupContainer svg.cup-icon'));
 
 async function loadCup(cup: CupName) {
   selectedCup = cup;

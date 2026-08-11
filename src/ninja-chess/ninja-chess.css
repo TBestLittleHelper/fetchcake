@@ -148,7 +148,7 @@ cg-container {
   gap: 0.75rem;
 }
 
-#cupContainer img {
+#cupContainer svg {
   width: min(4.5rem, calc(var(--boardsize) / 6.5));
   height: auto;
   display: block;
@@ -157,8 +157,8 @@ cg-container {
 
 #settingsButton:hover,
 #leaderboardButton:hover,
-#cupContainer img:hover,
-#cupContainer img.cup-icon:hover {
+#cupContainer svg:hover,
+#cupContainer svg.cup-icon:hover {
   transform: scale(1.15);
   filter: drop-shadow(0 0 0.45rem rgba(255, 255, 255, 0.35));
 }
