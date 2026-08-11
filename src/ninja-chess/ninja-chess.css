@@ -155,6 +155,8 @@ cg-container {
   transition: transform 0.18s ease, filter 0.18s ease;
 }
 
+#settingsButton:hover,
+#leaderboardButton:hover,
 #cupContainer img:hover,
 #cupContainer img.cup-icon:hover {
   transform: scale(1.15);
