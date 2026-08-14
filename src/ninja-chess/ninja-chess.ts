@@ -184,14 +184,13 @@ function isSolved(): boolean {
   return false;
 }
 
-function nextPuzzle(puzzleBatch: Puzzle[], currentIndex: number): void {
+function nextPuzzle(puzzleBatch: Puzzle[], nextIndex: number): void {
   lastSquare = null;
 
-  currentIndex++;
-  if (currentIndex >= puzzleBatch.length) {
-    currentIndex = 0;
+  if (nextIndex >= puzzleBatch.length) {
+    nextIndex = 0;
   }
-  gamestate.currentPuzzle = puzzleBatch[currentIndex];
+  gamestate.currentPuzzle = puzzleBatch[nextIndex];
   gamestate.currentPuzzleTotalSquares = 0;
   gamestate.moves = gamestate.currentPuzzle.moves.split(" ");
   gamestate.moveUci = gamestate.moves[0]
