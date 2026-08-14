@@ -1,4 +1,8 @@
 import './ninja-chess.css'
+import './chessground.base.css'
+import './chessground.brown.css'
+import './chessground.cburnett.css'
+import '../assets/cssUtil/checkbox.css'
 
 import { Chessground } from '@lichess-org/chessground';
 import type { Config } from "@lichess-org/chessground/config";
