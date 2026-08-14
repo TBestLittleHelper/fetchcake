@@ -3,7 +3,6 @@
 import fs from 'fs';
 import readline from 'readline';
 import path from 'path';
-import { pathToFileURL } from 'url';
 import { Chess } from 'chessops';
 import { parseFen } from 'chessops/fen';
 
