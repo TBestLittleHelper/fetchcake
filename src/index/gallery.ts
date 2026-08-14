@@ -19,9 +19,6 @@ export function createGallery(index?: number) {
 
 	return {
 		images: galleryImages,
-		getCurrentImage() {
-			return galleryImages[currentIndex]
-		},
 		getNextImage() {
 			currentIndex = (currentIndex + 1) % galleryImages.length
 			return galleryImages[currentIndex]
