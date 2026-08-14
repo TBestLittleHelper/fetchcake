@@ -25,15 +25,3 @@ export interface GameState {
 	attemptSquares: Key[];
 	status: string;
 }
-
-export interface CompletedRunStatistics {
-	Puzzles: PuzzleStatistic[];
-	startTime: Date
-	finishTime: Date
-}
-
-export interface PuzzleStatistic {
-	puzzleID: PuzzleID;
-	endTime: Date
-	squares: number
-}
