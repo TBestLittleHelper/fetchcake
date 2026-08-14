@@ -107,6 +107,22 @@ if (!container) {
 
 const cupButtons = Array.from(document.querySelectorAll<SVGSVGElement>('#cupContainer svg.cup-icon'));
 
+const cupNames: CupName[] = ['fish', 'camel', 'frog', 'mite', 'rhino'];
+
+const completedCups = loadCompletedCups();
+
+function loadCompletedCups(): Set<CupName> {
+  try {
+    const stored: unknown = JSON.parse(localStorage.getItem('completedCups') ?? '[]');
+    if (!Array.isArray(stored)) {
+      return new Set();
+    }
+    return new Set(stored.filter((cup): cup is CupName => cupNames.includes(cup as CupName)));
+  } catch {
+    return new Set();
+  }
+}
+
 async function loadCup(cup: CupName) {
   selectedCup = cup;
   puzzleBatch = await getPuzzleBatch(selectedCup);
@@ -139,6 +155,10 @@ for (const cupButton of cupButtons) {
   const cup = cupButton.dataset.cup as CupName | undefined;
   if (!cup) {
     continue;
+  }
+
+  if (completedCups.has(cup)) {
+    cupButton.classList.add('completed');
   }
 
   cupButton.addEventListener('click', () => {
@@ -215,5 +235,12 @@ function nextPuzzle(puzzleBatch: Puzzle[], nextIndex: number): void {
 }
 
 function endGame(): void {
+  completedCups.add(selectedCup);
+  try {
+    localStorage.setItem('completedCups', JSON.stringify([...completedCups]));
+  } catch {
+  }
+  const cupButton = cupButtons.find((button) => button.dataset.cup === selectedCup);
+  cupButton?.classList.add('completed');
   alert("Cup completed! ");
 };
