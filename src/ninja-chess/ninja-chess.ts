@@ -18,6 +18,29 @@ import type { DrawShape } from '@lichess-org/chessground/draw';
 
 const chessClockSound = new Audio("./sound/chessClock.m4a");
 
+let soundEnabled = loadSoundEnabled();
+
+function loadSoundEnabled(): boolean {
+  try {
+    return localStorage.getItem('soundEnabled') !== 'false';
+  } catch {
+    return true;
+  }
+}
+
+const soundToggle = document.querySelector<HTMLInputElement>('#soundToggle');
+
+if (soundToggle) {
+  soundToggle.checked = soundEnabled;
+  soundToggle.addEventListener('change', () => {
+    soundEnabled = soundToggle.checked;
+    try {
+      localStorage.setItem('soundEnabled', soundEnabled.toString());
+    } catch {
+    }
+  });
+}
+
 const nbPuzzles = getnbPuzzles();
 const maxSquaresAttempt = 9;
 
@@ -175,7 +198,9 @@ const logSquareAtPos = (x: number, y: number) => {
   lastSquare = square
   addAttempt(square)
   if (isSolved()) {
-    chessClockSound.play().catch(console.error)
+    if (soundEnabled) {
+      chessClockSound.play().catch(console.error)
+    }
     gamestate.solvedPuzzles++;
     progressElement.value = gamestate.solvedPuzzles;
     console.log("Puzzle solved! nb solved puzzles:", gamestate.solvedPuzzles)
