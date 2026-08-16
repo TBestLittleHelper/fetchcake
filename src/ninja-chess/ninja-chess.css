@@ -2,7 +2,6 @@
   --background-color: #2f4f4f;
   --title-color: wheat;
   --text-color: #f5f5f5;
-  --button-text-color: var(--background-color);
   --boardsize: min(70dvh, 80dvw);
 }
 
