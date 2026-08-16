@@ -64,6 +64,19 @@ dialog:not([open]) {
   margin-left: auto;
 }
 
+#settingsDialogOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  width: 25%;
+}
+
 #leaderboardDialog table {
   display: table;
   margin: 0 auto;
