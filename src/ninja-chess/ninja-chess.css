@@ -40,10 +40,6 @@ dialog {
   background-color: #229090;
 }
 
-dialog:not([open]) {
-  display: none;
-}
-
 .dialogHeader {
   display: flex;
   flex-direction: row;
