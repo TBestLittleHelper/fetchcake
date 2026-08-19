@@ -37,7 +37,7 @@ header {
 }
 
 header>button {
-  background-color: #00000000;
+  background: transparent;
   height: 3rem;
   width: 3rem;
   border-radius: 8px;
