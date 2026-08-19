@@ -13,6 +13,7 @@ import { parseUci } from 'chessops/util';
 
 import { getnbPuzzles, getPuzzleBatch, type CupName } from './puzzle';
 import { initSound, playSound, resumeAudioContext } from './sound';
+import { showWinDialog } from './win-dialog';
 import type { Key } from '@lichess-org/chessground/types';
 import type { Puzzle, GameState } from './types';
 import type { DrawShape } from '@lichess-org/chessground/draw';
@@ -244,5 +245,5 @@ function endGame(): void {
   }
   const cupButton = cupButtons.find((button) => button.dataset.cup === selectedCup);
   cupButton?.classList.add('completed');
-  alert("Cup completed! ");
+  showWinDialog(puzzleBatch, selectedCup);
 };
