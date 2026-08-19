@@ -76,7 +76,6 @@ main {
 
 cg-container {
   border-radius: 0.5rem;
-  overflow: hidden;
 }
 
 #cupContainer {
