@@ -52,14 +52,6 @@ dialog {
   border-collapse: collapse;
 }
 
-#leaderboardDialog thead {
-  display: table-header-group;
-}
-
-#leaderboardDialog tbody {
-  display: table-row-group;
-}
-
 #leaderboardDialog th,
 #leaderboardDialog td {
   display: table-cell;
