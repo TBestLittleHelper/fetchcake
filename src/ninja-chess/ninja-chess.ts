@@ -1,4 +1,5 @@
 import './ninja-chess.css'
+import './dialog.css'
 import './chessground.base.css'
 import './chessground.brown.css'
 import './chessground.cburnett.css'
