@@ -52,7 +52,6 @@ main {
 #ninjaChessContainer {
   display: flex;
   flex: 1 1 auto;
-  flex-direction: row;
   height: var(--boardsize);
   justify-content: center;
 }
