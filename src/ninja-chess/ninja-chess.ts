@@ -16,7 +16,7 @@ import { getnbPuzzles, getPuzzleBatch, type CupName } from './puzzle';
 import { initSound, playSound, resumeAudioContext } from './sound';
 import { showWinDialog } from './win-dialog';
 import type { Key } from '@lichess-org/chessground/types';
-import type { Puzzle, GameState } from './types';
+import type { Puzzle, PuzzleStats, GameState } from './types';
 import type { DrawShape } from '@lichess-org/chessground/draw';
 
 initSound();
@@ -66,6 +66,9 @@ function loadPuzzle() {
 
 
 const addAttempt = (square: Key): void => {
+  if (puzzleStartTime === 0) {
+    puzzleStartTime = Date.now();
+  }
   gamestate.currentPuzzleTotalSquares++;
   gamestate.attemptSquares.push(square);
 
@@ -113,6 +116,8 @@ const cupButtons = Array.from(document.querySelectorAll<SVGSVGElement>('#cupCont
 const cupNames: CupName[] = ['fish', 'camel', 'frog', 'mite', 'rhino'];
 
 const completedCups = loadCompletedCups();
+const puzzleStats: PuzzleStats[] = [];
+let puzzleStartTime = Date.now();
 
 function loadCompletedCups(): Set<CupName> {
   try {
@@ -133,6 +138,8 @@ async function loadCup(cup: CupName) {
     button.classList.toggle('selected', button.dataset.cup === cup);
   });
 
+  puzzleStats.length = 0;
+  puzzleStartTime = 0;
   gamestate.solvedPuzzles = 0;
   gamestate.currentPuzzle = puzzleBatch[0];
   gamestate.currentPuzzleTotalSquares = 0;
@@ -179,6 +186,10 @@ const logSquareAtPos = (x: number, y: number) => {
   addAttempt(square)
   if (isSolved()) {
     playSound()
+    puzzleStats.push({
+      squares: gamestate.currentPuzzleTotalSquares,
+      time: (Date.now() - puzzleStartTime) / 1000,
+    });
     gamestate.solvedPuzzles++;
     progressElement.value = gamestate.solvedPuzzles;
     console.log("Puzzle solved! nb solved puzzles:", gamestate.solvedPuzzles)
@@ -214,6 +225,7 @@ function isSolved(): boolean {
 
 function nextPuzzle(puzzleBatch: Puzzle[], nextIndex: number): void {
   lastSquare = null;
+  puzzleStartTime = Date.now();
 
   if (nextIndex >= puzzleBatch.length) {
     nextIndex = 0;
@@ -246,5 +258,5 @@ function endGame(): void {
   }
   const cupButton = cupButtons.find((button) => button.dataset.cup === selectedCup);
   cupButton?.classList.add('completed');
-  showWinDialog(puzzleBatch, selectedCup);
+  showWinDialog(puzzleBatch, selectedCup, puzzleStats);
 };

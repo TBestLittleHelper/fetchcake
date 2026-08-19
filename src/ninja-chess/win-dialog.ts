@@ -3,20 +3,25 @@ import type { Config } from '@lichess-org/chessground/config'
 import { Chess } from 'chessops/chess'
 import { parseFen, makeFen } from 'chessops/fen'
 import { parseUci } from 'chessops/util'
-import type { Puzzle } from './types'
+import type { Puzzle, PuzzleStats } from './types'
 import type { Key } from '@lichess-org/chessground/types'
 
-export function showWinDialog(puzzles: Puzzle[], cupName: string): void {
+export function showWinDialog(puzzles: Puzzle[], cupName: string, stats: PuzzleStats[]): void {
   const dialog = document.getElementById('winDialog') as HTMLDialogElement
   const title = document.getElementById('winDialogTitle')!
+  const statsElement = document.getElementById('winDialogStats')!
   const grid = document.getElementById('winDialogGrid')!
 
+  const totalTime = stats.reduce((sum, s) => sum + s.time, 0)
+  const totalSquares = stats.reduce((sum, s) => sum + s.squares, 0)
+
   title.textContent = `${cupName.charAt(0).toUpperCase()}${cupName.slice(1)} Cup Winner!`
+  statsElement.textContent = `${totalSquares} squares in ${totalTime.toFixed(1)}s`
   grid.innerHTML = ''
 
   puzzles.forEach((puzzle, index) => {
-    const card = document.createElement('div')
-    card.className = 'winPuzzleCard'
+    const puzzleEntry = document.createElement('div')
+    puzzleEntry.className = 'winPuzzleCard'
 
     const puzzleLink = document.createElement('a')
     puzzleLink.className = 'winPuzzleNum'
@@ -50,14 +55,17 @@ export function showWinDialog(puzzles: Puzzle[], cupName: string): void {
 
     Chessground(boardContainer, config)
 
-    const timeLabel = document.createElement('span')
-    timeLabel.className = 'winTimeLabel'
-    timeLabel.textContent = `${(2 + Math.random() * 8).toFixed(1)}s`
+    const stat = stats[index]
+    const puzzleStatLabel = document.createElement('span')
+    puzzleStatLabel.className = 'winPuzzleStat'
+    puzzleStatLabel.textContent = stat
+      ? `${stat.squares} squares in ${Math.round(stat.time)}s`
+      : '—'
 
-    card.appendChild(puzzleLink)
-    card.appendChild(boardContainer)
-    card.appendChild(timeLabel)
-    grid.appendChild(card)
+    puzzleEntry.appendChild(puzzleLink)
+    puzzleEntry.appendChild(boardContainer)
+    puzzleEntry.appendChild(puzzleStatLabel)
+    grid.appendChild(puzzleEntry)
   })
 
   dialog.showModal()

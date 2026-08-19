@@ -66,6 +66,12 @@ dialog {
   max-width: 90vw;
 }
 
+#winDialogStats {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
 #winDialogGrid {
   display: flex;
   flex-wrap: wrap;
@@ -88,7 +94,7 @@ dialog {
   height: 120px;
 }
 
-.winTimeLabel {
+.winPuzzleStat {
   font-size: 0.8rem;
 }
 

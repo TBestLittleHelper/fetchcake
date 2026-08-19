@@ -15,6 +15,11 @@ export interface Puzzle {
 	openingTags: string;
 }
 
+export interface PuzzleStats {
+	squares: number;
+	time: number;
+}
+
 export interface GameState {
 	solvedPuzzles: number;
 	currentPuzzle: Puzzle;
