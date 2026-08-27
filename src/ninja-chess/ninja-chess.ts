@@ -11,9 +11,11 @@ import type { Config } from "@lichess-org/chessground/config";
 import { Chess } from 'chessops/chess';
 import { parseFen, makeFen } from 'chessops/fen';
 import { parseUci } from 'chessops/util';
+import { parseSan } from 'chessops/san';
 
 import { getnbPuzzles, getPuzzleBatch } from './puzzle';
 import { fetchLichessPuzzles } from './lichess-puzzles';
+import type { Difficulty } from './lichess-puzzles';
 import { initSound, playSound, resumeAudioContext } from './sound';
 import { showWinDialog } from './win-dialog';
 import type { Key } from '@lichess-org/chessground/types';
@@ -50,12 +52,30 @@ function isLichessEnabled(): boolean {
   return puzzlesToggle?.checked ?? false;
 }
 
+function fenFromPgn(pgn: string, initialPly: number): string {
+  const moves = pgn.split(' ');
+  const chess = Chess.default();
+  for (let i = 0; i <= initialPly && i < moves.length; i++) {
+    const move = parseSan(chess, moves[i]);
+    if (!move) break;
+    chess.play(move);
+  }
+  return makeFen(chess.toSetup());
+}
+
 async function fetchPuzzles(cup: CupName): Promise<Puzzle[]> {
   if (isLichessEnabled()) {
-    const batch = await fetchLichessPuzzles(nbPuzzles as 10 | 20 | 30 | 40 | 50, 'normal');
+    const difficultyMap: Record<CupName, Difficulty> = {
+      fish: 'easiest',
+      camel: 'easier',
+      frog: 'normal',
+      mite: 'harder',
+      rhino: 'hardest',
+    };
+    const batch = await fetchLichessPuzzles(nbPuzzles as 10 | 20 | 30 | 40 | 50, difficultyMap[cup]);
     return batch.puzzles.map(entry => ({
       puzzleId: entry.puzzle.id,
-      fen: entry.puzzle.fen,
+      fen: fenFromPgn(entry.game.pgn, entry.puzzle.initialPly),
       moves: entry.puzzle.solution.join(' '),
       rating: entry.puzzle.rating,
       ratingDeviation: 0,
