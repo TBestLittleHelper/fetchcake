@@ -12,11 +12,11 @@ import { Chess } from 'chessops/chess';
 import { parseFen, makeFen } from 'chessops/fen';
 import { parseUci } from 'chessops/util';
 
-import { getnbPuzzles, getPuzzleBatch, type CupName } from './puzzle';
+import { getnbPuzzles, getPuzzleBatch } from './puzzle';
 import { initSound, playSound, resumeAudioContext } from './sound';
 import { showWinDialog } from './win-dialog';
 import type { Key } from '@lichess-org/chessground/types';
-import type { Puzzle, PuzzleStats, GameState } from './types';
+import type { Puzzle, PuzzleStats, CupName, GameState } from './types';
 import type { DrawShape } from '@lichess-org/chessground/draw';
 
 initSound();

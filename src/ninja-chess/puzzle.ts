@@ -1,8 +1,6 @@
-import type { Puzzle } from './types';
+import type { Puzzle, CupName } from './types';
 
 const CupPuzzleLength = 30;
-
-export type CupName = 'fish' | 'camel' | 'frog' | 'mite' | 'rhino';
 
 const puzzleCache: Partial<Record<CupName, Puzzle[]>> = {};
 

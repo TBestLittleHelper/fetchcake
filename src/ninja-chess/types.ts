@@ -1,5 +1,7 @@
 import type { Key } from '@lichess-org/chessground/types';
 
+export type CupName = 'fish' | 'camel' | 'frog' | 'mite' | 'rhino';
+
 export type PuzzleID = string;
 
 export interface Puzzle {
