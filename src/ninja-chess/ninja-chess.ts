@@ -13,6 +13,7 @@ import { parseFen, makeFen } from 'chessops/fen';
 import { parseUci } from 'chessops/util';
 
 import { getnbPuzzles, getPuzzleBatch } from './puzzle';
+import { fetchLichessPuzzles } from './lichess-puzzles';
 import { initSound, playSound, resumeAudioContext } from './sound';
 import { showWinDialog } from './win-dialog';
 import type { Key } from '@lichess-org/chessground/types';
@@ -23,6 +24,50 @@ initSound();
 
 const nbPuzzles = getnbPuzzles();
 const maxSquaresAttempt = 9;
+
+const puzzlesToggle = document.querySelector<HTMLInputElement>('#puzzlesToggle');
+
+function loadPuzzlesEnabled(): boolean {
+  try {
+    return localStorage.getItem('lichessPuzzles') === 'true';
+  } catch {
+    return false;
+  }
+}
+
+if (puzzlesToggle) {
+  puzzlesToggle.checked = loadPuzzlesEnabled();
+  puzzlesToggle.addEventListener('change', () => {
+    try {
+      localStorage.setItem('lichessPuzzles', puzzlesToggle.checked.toString());
+    } catch {
+      console.error('Failed to save lichessPuzzles to localStorage');
+    }
+  });
+}
+
+function isLichessEnabled(): boolean {
+  return puzzlesToggle?.checked ?? false;
+}
+
+async function fetchPuzzles(cup: CupName): Promise<Puzzle[]> {
+  if (isLichessEnabled()) {
+    const batch = await fetchLichessPuzzles(nbPuzzles as 10 | 20 | 30 | 40 | 50, 'normal');
+    return batch.puzzles.map(entry => ({
+      puzzleId: entry.puzzle.id,
+      fen: entry.puzzle.fen,
+      moves: entry.puzzle.solution.join(' '),
+      rating: entry.puzzle.rating,
+      ratingDeviation: 0,
+      popularity: 0,
+      nbPlays: entry.puzzle.plays,
+      themes: entry.puzzle.themes.join(' '),
+      gameUrl: '',
+      openingTags: '',
+    }));
+  }
+  return getPuzzleBatch(cup);
+}
 
 const boardElement = document.querySelector<HTMLElement>('#board')
 const progressElement = document.querySelector<HTMLProgressElement>("#ninjaGameProgress")
@@ -133,7 +178,7 @@ function loadCompletedCups(): Set<CupName> {
 
 async function loadCup(cup: CupName) {
   selectedCup = cup;
-  puzzleBatch = await getPuzzleBatch(selectedCup);
+  puzzleBatch = await fetchPuzzles(selectedCup);
   cupButtons.forEach((button) => {
     button.classList.toggle('selected', button.dataset.cup === cup);
   });
