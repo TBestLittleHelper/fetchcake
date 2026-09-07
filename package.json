@@ -6,15 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "puzzle": "node lichess_db_puzzle/sample-puzzles.js"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "typescript": "~6.0.3",
     "vite": "^8.2.2"
-  },
-  "dependencies": {
-    "@lichess-org/chessground": "^10.1.1",
-    "chessops": "^0.15.1"
   }
 }

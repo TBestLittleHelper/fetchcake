@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@lichess-org/chessground':
-        specifier: ^10.1.1
-        version: 10.1.1
-      chessops:
-        specifier: ^0.15.1
-        version: 0.15.1
     devDependencies:
       typescript:
         specifier: ~6.0.3
@@ -23,13 +16,6 @@ importers:
         version: 8.2.2
 
 packages:
-
-  '@badrap/result@0.3.1':
-    resolution: {integrity: sha512-ECvpsyZYknoRD0peG1K+UkX5llld3TyK1Ot9Cq2epSoWK19nyzpGKVl98sadSmohu5wHNuiDl+Ex9SVdcIjiFg==}
-    engines: {node: '>= 22'}
-
-  '@lichess-org/chessground@10.1.1':
-    resolution: {integrity: sha512-IBEs8+J64/zE8QB4NXxsvpjm/tHRjfQAdWwUh4xzqqN+RValgthWHemLnxsmtHFwuxvO4lHd+crp1ecgZxKVoQ==}
 
   '@oxc-project/types@0.148.0':
     resolution: {integrity: sha512-Nm4s/jB+4FpFsPhWGEC4h7rzksesmtnMXomo6rCMcg/b8zLQuOziRgkCS1fxDCXOlJB/6Q8oABOZ/OP6RIPj9A==}
@@ -132,9 +118,6 @@ packages:
 
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
-
-  chessops@0.15.1:
-    resolution: {integrity: sha512-hQDwv90AFkrPEsRJBebh3ZE+xDga25TCCv4lavNT2plZmd33UKNFYaZsE+7rafMbnBRrDEWUVsSYFqY3qCIGZw==}
 
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
@@ -307,10 +290,6 @@ packages:
 
 snapshots:
 
-  '@badrap/result@0.3.1': {}
-
-  '@lichess-org/chessground@10.1.1': {}
-
   '@oxc-project/types@0.148.0': {}
 
   '@rolldown/binding-android-arm-eabi@1.2.7':
@@ -359,10 +338,6 @@ snapshots:
     optional: true
 
   '@rolldown/pluginutils@1.0.1': {}
-
-  chessops@0.15.1:
-    dependencies:
-      '@badrap/result': 0.3.1
 
   detect-libc@2.1.2: {}
 
